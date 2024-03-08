@@ -1,0 +1,194 @@
+# This workflow will upload a Python Package using Twine when a release is created
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-python#publishing-to-package-registries
+
+# This workflow uses actions that are not certified by GitHub.
+# They are provided by a third-party and are governed by
+# separate terms of service, privacy policy, and support
+# documentation.
+
+name: Upload Python Package
+
+on:
+  release:
+    types: [published]
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up Python
+      uses: actions/setup-python@v3
+      with:
+        python-version: '3.x'
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install build
+    - name: Build package
+      run: python -m build
+    - name: Publish package
+      uses: pypa/gh-action-pypi-publish@27b31702a0e7fc50959f5ad993c78deac1bdfc29
+      with:
+        user: __token__
+        password: ${{ secrets.PYPI_API_TOKEN }}
+            - name: First interaction
+  uses: actions/first-interaction@v1.3.0
+  with:
+    # Token for the repository. Can be passed in using {{ secrets.GITHUB_TOKEN }}
+    repo-token: 
+    # Comment to post on an individual's first issue
+    issue-message: # optional
+    # Comment to post on an individual's first pull request
+    pr-message: # optional
+                    - name: Download a Build Artifact
+  uses: actions/download-artifact@v4.1.4
+  with:
+    # Name of the artifact to download. If unspecified, all artifacts for the run are downloaded.
+    name: # optional
+    # Destination path. Supports basic tilde expansion. Defaults to $GITHUB_WORKSPACE
+    path: # optional
+    # A glob pattern matching the artifacts that should be downloaded. Ignored if name is specified.
+    pattern: # optional
+    # When multiple artifacts are matched, this changes the behavior of the destination directories. If true, the downloaded artifacts will be in the same directory specified by path. If false, the downloaded artifacts will be extracted into individual named directories within the specified path.
+    merge-multiple: # optional, default is false
+    # The GitHub token used to authenticate with the GitHub API. This is required when downloading artifacts from a different repository or from a different workflow run. If this is not specified, the action will attempt to download artifacts from the current repository and the current workflow run.
+    github-token: # optional
+    # The repository owner and the repository name joined together by "/". If github-token is specified, this is the repository that artifacts will be downloaded from.
+    repository: # optional, default is ${{ github.repository }}
+    # The id of the workflow run where the desired download artifact was uploaded from. If github-token is specified, this is the run that artifacts will be downloaded from.
+    run-id: # optional, default is ${{ github.run_id }}
+
+
+            - name: Setup .NET Core SDK
+  uses: actions/setup-dotnet@v4.0.0
+  with:
+    # Optional SDK version(s) to use. If not provided, will install global.json version when available. Examples: 2.2.104, 3.1, 3.1.x, 3.x, 6.0.2xx
+    dotnet-version: # optional
+    # Optional quality of the build. The possible values are: daily, signed, validated, preview, ga.
+    dotnet-quality: # optional
+    # Optional global.json location, if your global.json isn't located in the root of the repo.
+    global-json-file: # optional
+    # Optional package source for which to set up authentication. Will consult any existing NuGet.config in the root of the repo and provide a temporary NuGet.config using the NUGET_AUTH_TOKEN environment variable as a ClearTextPassword
+    source-url: # optional
+    # Optional OWNER for using packages from GitHub Package Registry organizations/users other than the current repository's owner. Only used if a GPR URL is also provided in source-url
+    owner: # optional
+    # Optional NuGet.config location, if your NuGet.config isn't located in the root of the repo.
+    config-file: # optional
+    # Optional input to enable caching of the NuGet global-packages folder
+    cache: # optional
+    # Used to specify the path to a dependency file: packages.lock.json. Supports wildcards or a list of file names for caching multiple dependencies.
+    cache-dependency-path: # optional
+          G          
+                      - name: LaunchDarkly Flags
+  # You may pin to the exact commit or the version.
+  # uses: launchdarkly/gha-flags@fe09bc304808a02ea7f39198524565be98278011
+  uses: launchdarkly/gha-flags@v1.0.0
+  with:
+    # Server-side SDK key for environment.
+    sdk-key: # default is 
+    # Provide a list flag keys and default value in a comma separated format with a newline between each flag you want evaluated. `example-flag,true`
+    flags: # default is 
+    # The key of the context object used in a feature flag evaluation
+    context-key: # optional, default is ld-github-action-flags
+    # Whether to send analytics events back to LaunchDarkly
+    send-events: # optional, default is true
+    # Whether to use the LaunchDarkly SDK in offline mode
+    offline: # optional, default is false
+    # The base URI for the LaunchDarkly server. Most users should use the default value.
+    base-uri: # optional, default is https://app.launchdarkly.com
+    # The base URI for the LaunchDarkly streaming server. Most users should use the default value.
+    stream-uri: # optional, default is https://stream.launchdarkly.com
+    # The base URI for the LaunchDarkly events server. Most users should use the default value.
+    events-uri: # optional, default is https://events.launchdarkly.com
+    # Allows you to specify basic authentication parameters for an optional HTTP proxy. Usually of the form username:password.
+    proxy-auth: # optional
+    # Allows you to specify a host for an optional HTTP proxy. Both the host and port must be specified to enable proxy support.
+    proxy-host: # optional
+    # Allows you to specify a port for an optional HTTP proxy. Both the host and port must be specified to enable proxy support.
+    proxy-port: # optional
+    # When using an HTTP proxy, specifies whether it is accessed via http or https
+    proxy-scheme: # optional
+
+                      - name: Knative Service Manager
+  # You may pin to the exact commit or the version.
+  # uses: redhat-actions/kn-service-manager@9d456952c2b59c36db2bb2b83adfa983b1c787a4
+  uses: redhat-actions/kn-service-manager@v1
+  with:
+    # The Knative Service Name
+    service_name: 
+    # The Kubernetes Namespace to deploy to. Defaults to current context's namespace.
+    namespace: # optional
+    # The Knative service command, accepted commands are create, update, apply and delete
+    command: # optional, default is create
+    # The Knative Service Image
+    container_image: 
+    # Any extra arguments to append to the kn <command>
+    kn_extra_args: # optional
+    # The registry user to use to create the image pull secret
+    registry_user: # optional
+    # The registry user password
+    registry_password: # optional
+    # "Pass --force to kn create. If the service already exists,
+the service will be replaced, instead of kn create failing.
+This input has no effect if command is not create"
+
+    force_create: # optional, default is false
+          B
+                      - name: Azure Resource Manager (ARM) Template Deployment
+  # You may pin to the exact commit or the version.
+  # uses: whiteducksoftware/azure-arm-action@9bae2e95df87dbd4acae11deb0765be7256fd141
+  uses: whiteducksoftware/azure-arm-action@v3.3
+  with:
+    # Paste output of `az ad sp create-for-rbac -o json` as value of secret variable: AZURE_CREDENTIALS
+    creds: 
+    # Provide the name of a resource group.
+    resourceGroupName: 
+    # Specify the path to the Azure Resource Manager template.
+    templateLocation: 
+    # Specifies the name of the resource group deployment to create.
+    deploymentName: 
+    # Incremental (only add resources to resource group) or Complete (remove extra resources from resource group).
+    deploymentMode: # optional, default is Incremental
+    # Specify either path to the Azure Resource Manager parameters file or pass them as 'key1=value1;key2=value2;...'.
+    parameters: # optional
+    # Specify either path to the Azure Resource Manager override parameters file or pass them as 'key1=value1;key2=value2;...'.
+    overrideParameters: # optional
+
+            - name: Garden Action
+  # You may pin to the exact commit or the version.
+  # uses: garden-io/garden-action@c221d0ec3ba851097c8175778a1be911b02cf989
+  uses: garden-io/garden-action@v1.2
+  with:
+    # All command line options for the garden cli command.
+
+If not provided, the garden-action will only install garden and export the KUBECONFIG and GARDEN_AUTH_TOKEN
+environment variables for use in scripts in later steps.
+
+    command: # optional
+    # Garden logger type. Defaults to basic.
+    logger-type: # optional, default is basic
+    # Garden log level. Defaults to verbose.
+    log-level: # optional, default is verbose
+    # A base64 encoded string of the kubeconfig to use with Garden. Optional.
+    kubeconfig: # optional
+    # Path where Garden expects the kubeconfig. Defaults to $HOME/kube/config.
+    kubeconfig-location: # optional, default is ${{ runner.temp }}/garden/kubeconfig
+    # Garden version. Defaults to latest stable.
+    garden-version: # optional, default is latest
+    # An auth token to authenticate in case your project is connected to Garden Cloud. Optional.
+    garden-auth-token: # optional
+    # A path to a garden project in a repository.
+
+Only necessary if there are multiple garden projects in a repository, or when the project.garden.yml is in a subdirectory.
+
+    garden-workdir: # optional
+    # Github token for releases API. Required. Defaults to the `github.token` context variable.
+    github-token: # default is ${{ github.token }}
+          
+          
